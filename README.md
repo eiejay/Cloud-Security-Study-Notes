@@ -1,23 +1,22 @@
 # Cloud Security Study Notes
 
-Study notes and small projects from cloud security coursework covering Microsoft Azure and AWS: identity, architecture, monitoring, and automation with PowerShell.
+These are my study notes from working through Azure security and the AWS Solutions Architect track, turned into things I can show instead of just claim: a baseline I can run through an account, an IAM policy review with the before and after written out, a report-only PowerShell script for dormant accounts, and an anomaly scorer I built to catch the sign-in that is technically allowed and completely wrong.
 
-## Study notes
+## The projects
 
-- [Azure Security Notes](azure-security-notes.md): Entra ID, MFA and Conditional Access, Azure RBAC, network security, and Defender for Cloud.
-- [AWS Architecture Notes](aws-architecture-notes.md): IAM, VPC design, S3 security, logging with CloudTrail, and the shared responsibility model.
-- [PowerShell Automation Notes](powershell-automation-notes.md): the cmdlets and patterns used for user administration and reporting.
+- projects/signin-anomaly-scorer: learns each user's home city and working hours from a sign-in log, then scores every sign-in with the reasons printed next to the points. In the sample data the 3 AM sign-ins from another continent flag INVESTIGATE while a business trip flags REVIEW, which is the difference between a queue and a false alarm storm.
+- projects/secure-cloud-account-baseline: the checklist I run a new account against: MFA everywhere, legacy authentication off, dormant access hunted down, plus the AWS and Azure CLI runbooks, written to be reviewed before anyone runs them.
+- projects/iam-policy-review: a worked least privilege rewrite. A wildcard policy that grants everything everywhere becomes a scoped one, and the included checker script proves the wildcards are gone instead of asking you to trust the writeup.
+- projects/powershell-admin-scripts: an inactive users report that only reports. It touches nothing, changes nothing, and says so in the header, because an admin script you cannot trust is worse than none.
 
-## Projects
+## The notes
 
-1. [Secure Cloud Account Baseline](projects/secure-cloud-account-baseline/): the step-by-step hardening pass for a new cloud account, before anything is deployed on it.
-2. [IAM Policy Review](projects/iam-policy-review/): an over-permissive policy taken apart and rewritten to least privilege, with the review reasoning shown.
-3. [PowerShell Admin Scripts](projects/powershell-admin-scripts/): small reporting scripts that run on sample data: inactive account reporting, the first report every security review asks for.
+- azure-security-notes.md, aws-architecture-notes.md, powershell-automation-notes.md: concepts in my own words, organized the way I review them before an interview, not copied reference material.
 
-## Background
+## How I use this repo
 
-Coursework: Azure security, AWS Solutions Architect Associate track, and a PowerShell automation capsule (2025), alongside CompTIA Security+ and CySA+.
+WALKTHROUGH.md reproduces the checks: the policy validator finds three problems in the before policy and clears them in the after. I studied the AWS architecture track without sitting the certification exam, and I say so plainly wherever it matters; the notes and projects are the evidence of the study. If I cannot run it in front of you, I do not list it as a skill.
 
 ## License
 
-MIT
+MIT.
