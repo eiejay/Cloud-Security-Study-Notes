@@ -1,0 +1,11 @@
+SamAccountName,DisplayName,LastLogon,Enabled
+jsmith,J. Smith,2026-11-02,True
+mlopez,M. Lopez,2026-10-28,True
+tnguyen,T. Nguyen,2026-11-05,True
+oldcontractor,Former Contractor,2026-05-14,True
+svc-reports,Reporting Service Account,,True
+temp.nurse,Temp Nurse Pool,2026-03-01,True
+kpatel,K. Patel,2026-09-19,True
+disabled.user,Disabled Example,2025-12-01,False
+newhire.a,New Hire A,,True
+bwilson,B. Wilson,2026-11-06,True
