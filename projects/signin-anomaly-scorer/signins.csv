@@ -1,0 +1,19 @@
+user,time,city,device_known,result
+a.okafor,2026-10-26 08:12,Dallas,yes,success
+a.okafor,2026-10-26 12:40,Dallas,yes,success
+a.okafor,2026-10-27 08:05,Dallas,yes,success
+a.okafor,2026-10-27 17:22,Dallas,yes,success
+a.okafor,2026-10-28 08:31,Dallas,yes,success
+a.okafor,2026-10-28 13:15,Dallas,yes,success
+a.okafor,2026-10-29 08:02,Dallas,yes,success
+a.okafor,2026-10-29 16:48,Dallas,yes,success
+a.okafor,2026-10-30 08:20,Dallas,yes,success
+a.okafor,2026-10-30 03:14,Lagos,no,success
+a.okafor,2026-10-30 03:16,Lagos,no,failure
+a.okafor,2026-10-30 03:17,Lagos,no,failure
+a.okafor,2026-10-31 09:02,Houston,yes,success
+j.meyer,2026-10-26 09:10,Chicago,yes,success
+j.meyer,2026-10-27 09:02,Chicago,yes,success
+j.meyer,2026-10-28 09:15,Chicago,yes,success
+j.meyer,2026-10-29 22:41,Chicago,no,success
+j.meyer,2026-10-30 09:05,Chicago,yes,success
