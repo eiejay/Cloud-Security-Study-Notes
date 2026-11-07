@@ -2,56 +2,31 @@
 
 A worked example of the most common cloud security task: taking an over-permissive IAM policy apart and rewriting it to least privilege. The workload is fictional: a reporting job that reads two S3 buckets and writes results to a third.
 
-## The policy as found
+## Files
 
-    {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Effect": "Allow",
-          "Action": "s3:*",
-          "Resource": "*"
-        }
-      ]
-    }
+- policy_before.json: the policy as found
+- policy_after.json: the least-privilege rewrite
+- policy_check.py: a small checker that flags wildcard actions, wildcard resources, and missing conditions in any policy file
 
-## What is wrong with it
+## Run the checker
+
+    python3 policy_check.py policy_before.json
+    python3 policy_check.py policy_after.json
+
+The before policy returns findings on every line: a service wildcard (s3:*), a full resource wildcard, and no condition. The after policy clears the wildcard findings. The checker is a first-pass aid; it does not prove a policy correct, it proves the common failures absent.
+
+## What was wrong with the original
 
 1. s3:* grants every S3 action: delete buckets, change policies, disable logging. A reporting job needs to read and write objects, nothing more.
 2. Resource * covers every bucket in the account, including backups and the log archive. One compromised credential reaches everything.
-3. There is no condition: no source restriction, no encryption requirement, nothing.
+3. No condition: no source restriction, no encryption requirement, nothing.
 
 This shape of policy is how small incidents become account-wide ones.
 
-## The rewrite
-
-    {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Sid": "ReadSourceBuckets",
-          "Effect": "Allow",
-          "Action": ["s3:GetObject", "s3:ListBucket"],
-          "Resource": [
-            "arn:aws:s3:::reports-in-a",
-            "arn:aws:s3:::reports-in-a/*",
-            "arn:aws:s3:::reports-in-b",
-            "arn:aws:s3:::reports-in-b/*"
-          ]
-        },
-        {
-          "Sid": "WriteResultsOnly",
-          "Effect": "Allow",
-          "Action": ["s3:PutObject"],
-          "Resource": ["arn:aws:s3:::reports-out/*"]
-        }
-      ]
-    }
-
-## What changed and why
+## What the rewrite changes
 
 - Actions narrowed from s3:* to the three calls the job actually makes: GetObject and ListBucket to read, PutObject to write.
-- Resources narrowed from * to the three named buckets, with bucket-level and object-level ARNs separated correctly: ListBucket applies to the bucket ARN, GetObject and PutObject to the object ARNs. Mixing those up is the classic cause of a least-privilege policy that silently does nothing.
+- Resources narrowed from * to the three named buckets, with bucket-level and object-level ARNs separated correctly: ListBucket applies to the bucket ARN; GetObject and PutObject apply to object ARNs. Mixing those up is the classic cause of a least-privilege policy that silently does nothing.
 - Delete is gone entirely. If the job ever needs it, that is a new review, not a wildcard waiting in place.
 
 ## Review method, reusable

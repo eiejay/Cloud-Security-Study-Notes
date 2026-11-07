@@ -1,0 +1,22 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadSourceBuckets",
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:ListBucket"],
+      "Resource": [
+        "arn:aws:s3:::reports-in-a",
+        "arn:aws:s3:::reports-in-a/*",
+        "arn:aws:s3:::reports-in-b",
+        "arn:aws:s3:::reports-in-b/*"
+      ]
+    },
+    {
+      "Sid": "WriteResultsOnly",
+      "Effect": "Allow",
+      "Action": ["s3:PutObject"],
+      "Resource": ["arn:aws:s3:::reports-out/*"]
+    }
+  ]
+}
